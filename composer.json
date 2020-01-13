@@ -1,0 +1,24 @@
+{
+  "name": "zoon/resource",
+  "description": "This is class for creating rest api resource models",
+  "type": "library",
+  "license": "proprietary",
+  "config": {
+    "secure-http": false
+  },
+  "autoload": {
+    "psr-4": {
+      "Zoon\\Resource\\": "src/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://zoon:lr7VA29u0qNkQoiH@composer.dev.zoon.ru"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "ext-mbstring": "*"
+  }
+}
