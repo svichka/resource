@@ -12,6 +12,7 @@ class Resource {
 	 * @var mixed
 	 */
 	public $resource;
+	protected $additional;
 
 	/**
 	 * Create a new resource instance.
@@ -38,17 +39,46 @@ class Resource {
 	}
 
 	/**
-	 * Create new anonymous resource collection.
+	 * Add additional meta data to the resource response.
 	 *
-	 * @param  array  $list
+	 * @param  array  $data
+	 * @return $this
+	 */
+	public function additional(array $data)
+	{
+		foreach ($data as $key => $value) {
+			$this->$key = $value;
+		}
+		return $this;
+	}
+
+	/**
+	 * Create new resource collection.
+	 *
+	 * @param  array $list
+	 * @param  array $data
 	 * @return array
 	 */
-	public static function collection(array $list) : array {
+	public static function collection(array $list, array $data = []) : array {
 		$result = [];
 		foreach ($list as $item) {
-			array_push($result, (new static($item))->toArray());
+			array_push($result, (new static($item))->additional($data)->toArray());
 		}
-
 		return $result;
+	}
+
+	/**
+	 * Create new response from collection.
+	 *
+	 * @param array $list
+	 * @param array $data
+	 * @return array
+	 */
+	public static function response(array $list, array $data = []) : array {
+		$result = static::collection($list, $data);
+		return [
+			'count' => count($result),
+			'items' => $result,
+		];
 	}
 }
